@@ -1,5 +1,6 @@
 package com.example.wattercount.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +8,15 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wattercount.MainActivity
 import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.R
+import com.example.wattercount.db.AppDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class HistoryAdapter(private val dataList: List<HistoryItem>) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
-
+class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val db: AppDatabase, private val mainActivity: MainActivity) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+    private val TAG = "debugTag"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder  {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.history_item, parent, false)
         return HistoryViewHolder(view)
@@ -19,6 +24,8 @@ class HistoryAdapter(private val dataList: List<HistoryItem>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: HistoryAdapter.HistoryViewHolder, position: Int) {
         val item = dataList[position]
+
+        Log.v(TAG, item.toString())
 
         holder.timeTextView.text = item.time
         holder.countTextView.text = item.count
@@ -30,11 +37,11 @@ class HistoryAdapter(private val dataList: List<HistoryItem>) : RecyclerView.Ada
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.history_change -> {
-                        // Действие при выборе элемента "Изменить"
                         true
                     }
                     R.id.history_delete -> {
-                        // Действие при выборе элемента "Удалить"
+                        val selectedItem = dataList[position]
+                        deleteHistoryItem(selectedItem) // Вызов метода для удаления элемента
                         true
                     }
                     else -> false
@@ -43,6 +50,16 @@ class HistoryAdapter(private val dataList: List<HistoryItem>) : RecyclerView.Ada
 
             popupMenu.show()
         }
+    }
+
+    private fun deleteHistoryItem(historyItem: HistoryItem) {
+        GlobalScope.launch {
+            db.historyItemDao().deleteById(historyItem.id)
+        }
+        dataList.remove(historyItem)
+        notifyDataSetChanged()
+
+//        mainActivity.updateCurrentCountWater()
     }
 
     override fun getItemCount(): Int {

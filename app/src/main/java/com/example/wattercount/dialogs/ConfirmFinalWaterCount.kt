@@ -1,4 +1,4 @@
-package com.example.wattercount
+package com.example.wattercount.dialogs
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.example.wattercount.FinalWaterListener
+import com.example.wattercount.R
 
 class ConfirmFinalWaterCount(private val layoutResourceId: Int) : DialogFragment() {
     private val TAG = "debugTag"
