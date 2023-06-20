@@ -1,4 +1,4 @@
-package com.example.wattercount
+package com.example.wattercount.dialogs
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,6 +13,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.example.wattercount.DialogListener
+import com.example.wattercount.R
 
 
 class VariableDialogFragment(private val layoutResourceId: Int) : DialogFragment() {
@@ -103,7 +105,6 @@ class VariableDialogFragment(private val layoutResourceId: Int) : DialogFragment
         val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
-
 
 
     private fun onButtonClicked(buttons: Array<Button>, clickedButton: Button) {

@@ -2,6 +2,7 @@ package com.example.wattercount
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,8 @@ import com.example.wattercount.Activity.HistoryActivity
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.databinding.ActivityMainBinding
 import com.example.wattercount.db.AppDatabase
+import com.example.wattercount.dialogs.ConfirmFinalWaterCount
+import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,14 +46,14 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             adapter.notifyDataSetChanged()
         }
 
+        setHistoryRecycler()
+
         currentDrinkCount = SharedPreferencesHelper.getCurrentWaterCount(this).toString()
         binding.currentCountWater.text = currentDrinkCount
         val finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
         binding.finalCountWater.text = finalCountWater.toString()
         binding.percentCountWater.text = "${calcPercent()}%"
 
-
-        setHistoryRecycler()
 
         // Установка текущей даты
         binding.currentDate.text = getCurrentDate()
@@ -92,8 +95,8 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         val currentTime = Calendar.getInstance().time
         val timeFormat = SimpleDateFormat("HH:mm")
         val formattedTime = timeFormat.format(currentTime)
-        val historyItem = HistoryItem(time = formattedTime, count = "$count ml")
 
+        val historyItem = HistoryItem(time = formattedTime, count = "$count")
         // Сохранение элемента в базе данных
         GlobalScope.launch {
             database.historyItemDao().insert(historyItem)
@@ -161,11 +164,21 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
+    fun updateCurrentCountWater() {
+        Log.v(TAG, "error 1")
+        currentDrinkCount = dataList.sumBy { it.count.toInt() }.toString()
+        Log.v(TAG, "error 2")
+        binding.currentCountWater.text = currentDrinkCount
+        Log.v(TAG, "error 3")
+        binding.percentCountWater.text = "${calcPercent()}%"
+    }
+
+
     private fun setHistoryRecycler() {
         recyclerView = binding.recycleHistory
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = HistoryAdapter(dataList)
+        adapter = HistoryAdapter(dataList, database, this)
         recyclerView.adapter = adapter
     }
 

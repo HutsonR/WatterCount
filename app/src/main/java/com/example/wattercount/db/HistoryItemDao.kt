@@ -1,4 +1,4 @@
-package com.example.wattercount
+package com.example.wattercount.db
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -14,6 +14,6 @@ interface HistoryItemDao {
     @Query("SELECT * FROM history_items ORDER BY id DESC")
     suspend fun getAll(): List<HistoryItem>
 
-    @Delete
-    suspend fun deleteHistoryItem(historyItem: HistoryItem)
+    @Query("DELETE FROM history_items WHERE id = :itemId")
+    suspend fun deleteById(itemId: Int)
 }
