@@ -1,9 +1,11 @@
-package com.example.wattercount
+package com.example.wattercount.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.wattercount.entities.HistoryItem
+import com.example.wattercount.HistoryItemDao
 
 @Database(entities = [HistoryItem::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wattercount.Activity.HistoryActivity
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.databinding.ActivityMainBinding
+import com.example.wattercount.db.AppDatabase
+import com.example.wattercount.entities.HistoryItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

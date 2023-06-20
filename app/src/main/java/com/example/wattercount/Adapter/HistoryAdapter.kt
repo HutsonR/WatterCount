@@ -7,7 +7,7 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wattercount.HistoryItem
+import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.R
 
 class HistoryAdapter(private val dataList: List<HistoryItem>) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {

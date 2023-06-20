@@ -1,4 +1,4 @@
-package com.example.wattercount
+package com.example.wattercount.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
