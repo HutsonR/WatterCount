@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.example.wattercount.entities.HistoryItem
 
 @Dao
@@ -16,4 +17,7 @@ interface HistoryItemDao {
 
     @Query("DELETE FROM history_items WHERE id = :itemId")
     suspend fun deleteById(itemId: Int)
+
+    @Update
+    fun update(historyItem: HistoryItem)
 }
