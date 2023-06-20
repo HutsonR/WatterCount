@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    настройки elevation-->
+    <dimen name="elevation_s">10dp</dimen>
+    <dimen name="elevation_m">24dp</dimen>
+    <dimen name="elevation_l">30dp</dimen>
+</resources>

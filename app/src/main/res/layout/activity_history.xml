@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundMain">
+
+    <ImageButton
+        android:id="@+id/close_history_activity"
+        android:backgroundTint="@color/backgroundMain"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="Закрыть окно"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/round_corner_10"
+        android:orientation="vertical"
+        android:elevation="@dimen/elevation_s"
+        android:padding="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/history_weekly_title"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="пн"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="вт"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ср"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="чт"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="пт"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="сб"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.14"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    app:srcCompat="@drawable/history_weekly_inactive" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="вс"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/history_report_title"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal" android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_report_weekly"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пусто"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:textColor="@color/primary" />
+    </LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroundGray" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal" android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_report_mounthly"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пусто"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:textColor="@color/primary" />
+    </LinearLayout>
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroundGray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal" android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history_report_average_finish"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Пусто"
+            android:textSize="14sp"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:textColor="@color/primary" />
+    </LinearLayout>
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/backgroundGray" />
+
+</LinearLayout>
