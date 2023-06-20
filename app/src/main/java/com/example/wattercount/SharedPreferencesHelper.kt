@@ -12,6 +12,7 @@ object SharedPreferencesHelper {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
+
 //    fun getCurrentWaterCount(context: Context): Int {
 //        val prefs = getSharedPreferences(context)
 //        return prefs.getInt(PREF_CURRENT_WATER_COUNT, 0)
@@ -21,6 +22,7 @@ object SharedPreferencesHelper {
 //        val prefs = getSharedPreferences(context)
 //        prefs.edit().putInt(PREF_CURRENT_WATER_COUNT, count).apply()
 //    }
+
 
     fun getFinalWaterCount(context: Context): Int {
         val prefs = getSharedPreferences(context)
