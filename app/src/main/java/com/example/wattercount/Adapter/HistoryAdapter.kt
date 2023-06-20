@@ -36,9 +36,6 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
 
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.history_change -> {
-                        true
-                    }
                     R.id.history_delete -> {
                         val selectedItem = dataList[position]
                         deleteHistoryItem(selectedItem) // Вызов метода для удаления элемента

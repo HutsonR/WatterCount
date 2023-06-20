@@ -10,7 +10,7 @@ import com.example.wattercount.Activity.HistoryActivity
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.databinding.ActivityMainBinding
 import com.example.wattercount.db.AppDatabase
-import com.example.wattercount.dialogs.ConfirmFinalWaterCount
+import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
 import kotlinx.coroutines.GlobalScope
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         setContentView(binding.root)
         val setFinalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
         if (setFinalCountWater == 0) {
-            ConfirmFinalWaterCount(R.layout.final_count_fragment).show(supportFragmentManager, "final water")
+            ConfirmFinalWaterCountFragment(R.layout.final_count_fragment).show(supportFragmentManager, "final water")
         }
 
         database = AppDatabase.getInstance(this)

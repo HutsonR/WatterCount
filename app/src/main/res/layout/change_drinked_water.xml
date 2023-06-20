@@ -40,7 +40,7 @@
             android:text="@string/history_new_value"/>
 
         <EditText
-            android:id="@+id/customAddValue"
+            android:id="@+id/customAddChangeValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

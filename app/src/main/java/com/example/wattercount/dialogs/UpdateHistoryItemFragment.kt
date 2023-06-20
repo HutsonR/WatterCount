@@ -11,21 +11,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import com.example.wattercount.FinalWaterListener
 import com.example.wattercount.R
+import com.example.wattercount.UpdateHistoryItemListener
 
-class ConfirmFinalWaterCount(private val layoutResourceId: Int) : DialogFragment() {
+class UpdateHistoryItemFragment(private val layoutResourceId: Int) : DialogFragment() {
     private val TAG = "debugTag"
 
     private var editTextValue: String = ""
     private lateinit var editText: TextView
-    private lateinit var dialogListener: FinalWaterListener
+    private lateinit var dialogListener: UpdateHistoryItemListener
 
     //  проверка, что активити, вызывающая DialogFragment, реализует интерфейс DialogListener
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            dialogListener = context as FinalWaterListener
+            dialogListener = context as UpdateHistoryItemListener
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement DialogListener")
         }
@@ -37,13 +37,17 @@ class ConfirmFinalWaterCount(private val layoutResourceId: Int) : DialogFragment
         getDialog()!!.window?.setBackgroundDrawableResource(R.drawable.round_corner_20)
         val view = inflater.inflate(layoutResourceId, container, false)
 
-        val saveButton = view.findViewById<Button>(R.id.saveFinalButton)
+        val saveButton = view.findViewById<Button>(R.id.saveChangeButton)
+        val cancelButton = view.findViewById<Button>(R.id.cancelChangeButton)
         saveButton.setOnClickListener {
             handleSaveButtonClicked()
             dismiss()
         }
+        cancelButton.setOnClickListener {
+            dismiss()
+        }
 
-        editText = view.findViewById(R.id.finalCountValue)
+        editText = view.findViewById(R.id.customAddChangeValue)
         // Устанавливаем слушатель для поля EditText
         editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -80,7 +84,7 @@ class ConfirmFinalWaterCount(private val layoutResourceId: Int) : DialogFragment
 
     private fun handleSaveButtonClicked() {
         if (editTextValue.isNotEmpty()) {
-            dialogListener.onFinalResult(editTextValue)
+            dialogListener.onUpdateResult(editTextValue)
         }
     }
 }
