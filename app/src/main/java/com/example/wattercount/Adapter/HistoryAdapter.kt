@@ -59,7 +59,7 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
         dataList.remove(historyItem)
         notifyDataSetChanged()
 
-//        mainActivity.updateCurrentCountWater()
+        mainActivity.updateCurrentCountWater()
     }
 
     override fun getItemCount(): Int {

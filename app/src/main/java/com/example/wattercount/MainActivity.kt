@@ -44,12 +44,11 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             val historyItems = database.historyItemDao().getAll()
             dataList.addAll(historyItems)
             adapter.notifyDataSetChanged()
+            updateCurrentCountWater()
         }
-
+        Log.v(TAG, dataList.toString())
         setHistoryRecycler()
 
-        currentDrinkCount = SharedPreferencesHelper.getCurrentWaterCount(this).toString()
-        binding.currentCountWater.text = currentDrinkCount
         val finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
         binding.finalCountWater.text = finalCountWater.toString()
         binding.percentCountWater.text = "${calcPercent()}%"
@@ -104,15 +103,13 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
         dataList.add(0, historyItem)
         adapter.notifyItemInserted(0)
+        Log.v(TAG, dataList.toString())
     }
-
 
 
     override fun onDialogResult(data: String) {
         addHistoryItem(data)
         currentDrinkCount = (binding.currentCountWater.text.toString().toInt() + data.toInt()).toString()
-        SharedPreferencesHelper.setCurrentWaterCount(this, currentDrinkCount.toInt())
-
         binding.currentCountWater.text = currentDrinkCount
         binding.percentCountWater.text = "${calcPercent()}%"
     }
@@ -165,11 +162,8 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
 
     fun updateCurrentCountWater() {
-        Log.v(TAG, "error 1")
         currentDrinkCount = dataList.sumBy { it.count.toInt() }.toString()
-        Log.v(TAG, "error 2")
         binding.currentCountWater.text = currentDrinkCount
-        Log.v(TAG, "error 3")
         binding.percentCountWater.text = "${calcPercent()}%"
     }
 
