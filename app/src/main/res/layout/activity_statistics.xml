@@ -43,9 +43,9 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,9 +87,9 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,9 +109,9 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,9 +131,9 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,9 +153,9 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,9 +175,9 @@
 
                 <ImageView
                     android:id="@+id/imageView7"
+                    android:background="@drawable/day_not_finish"
                     android:layout_width="25sp"
-                    android:layout_height="25sp"
-                    app:srcCompat="@drawable/history_weekly_inactive" />
+                    android:layout_height="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/backgroundGray" />
+        android:background="@color/divider" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -249,7 +249,7 @@
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/backgroundGray" />
+        android:background="@color/divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -274,7 +274,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" %"
+            android:text="%"
             android:textSize="14sp"
             android:gravity="end"
             android:textColor="@color/primary" />
@@ -283,6 +283,6 @@
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/backgroundGray" />
+        android:background="@color/divider" />
 
 </LinearLayout>

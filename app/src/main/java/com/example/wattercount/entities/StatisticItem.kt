@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class StatisticItem(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val dayValue: String,
-    val finishDay: Boolean = false
+    val isFinishDay: Boolean = false,
+    val dayOfWeek: Int
 )
