@@ -6,13 +6,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wattercount.Activity.HistoryActivity
+import com.example.wattercount.Activity.StatisticsActivity
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.databinding.ActivityMainBinding
 import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
+import com.example.wattercount.entities.StatisticItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         }
 
         database = AppDatabase.getInstance(this)
+        setStatsListener()
 
         GlobalScope.launch {
             val historyItems = database.historyItemDao().getAll()
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             adapter.notifyDataSetChanged()
             updateCurrentCountWater()
         }
-        Log.v(TAG, dataList.toString())
+
         setHistoryRecycler()
 
         val finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
@@ -55,15 +57,16 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
 
         // Установка текущей даты
-        binding.currentDate.text = getCurrentDate()
+        val currentDate = getCurrentDate()
+        SharedPreferencesHelper.setCurrentDateValue(this, currentDate)
+        binding.currentDate.text = currentDate
 
         binding.customPopupAdd.setOnClickListener {
             VariableDialogFragment(R.layout.add_fragment).show(supportFragmentManager, "add fragment")
         }
-
+        val test: Boolean = Utils.isDifferentDate(this)
+        Log.v(TAG, "test $test")
         setupStandartAddButton()
-        setStatsListener()
-
     }
 
 
@@ -103,7 +106,6 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
         dataList.add(0, historyItem)
         adapter.notifyItemInserted(0)
-        Log.v(TAG, dataList.toString())
     }
 
 
@@ -155,14 +157,14 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
     private fun setStatsListener() {
         binding.statsButton.setOnClickListener {
-            val intent = Intent(this, HistoryActivity::class.java)
+            val intent = Intent(this, StatisticsActivity::class.java)
             startActivity(intent)
         }
     }
 
 
     fun updateCurrentCountWater() {
-        currentDrinkCount = dataList.sumBy { it.count.toInt() }.toString()
+        currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
         binding.currentCountWater.text = currentDrinkCount
         binding.percentCountWater.text = "${calcPercent()}%"
     }
