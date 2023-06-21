@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.wattercount.entities.HistoryItem
+import com.example.wattercount.entities.StatisticItem
 
-@Database(entities = [HistoryItem::class], version = 1)
+@Database(entities = [HistoryItem::class, StatisticItem::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyItemDao(): HistoryItemDao
+    abstract fun statsItemDao(): StatisticItemDao
 
     companion object {
         private const val DATABASE_NAME = "water_database"
@@ -27,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            ).fallbackToDestructiveMigration().build()
         }
     }
 }

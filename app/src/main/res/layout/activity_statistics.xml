@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history_weekly_title"
+            android:text="@string/statistic_weekly_title"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
             android:textSize="16sp"/>
@@ -42,7 +42,7 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/imageView1"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -64,6 +64,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView2"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -85,6 +86,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView3"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -106,6 +108,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView4"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -127,6 +130,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView5"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -148,6 +152,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView6"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -169,6 +174,7 @@
                 android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/imageView7"
                     android:layout_width="25sp"
                     android:layout_height="25sp"
                     app:srcCompat="@drawable/history_weekly_inactive" />
@@ -177,6 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="вс"
+                    android:layout_marginTop="2dp"
                     android:fontFamily="@font/montserrat"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
@@ -187,7 +194,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:text="@string/history_report_title"
+        android:text="@string/statistic_report_title"
         android:fontFamily="@font/montserrat_medium"
         android:textColor="@color/black"
         android:textSize="16sp"/>
@@ -199,10 +206,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/history_report_weekly"
+            android:text="@string/statistic_last_day"
             android:textSize="14sp"
             android:textColor="@color/black" />
         <TextView
+            android:id="@+id/last_day_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Пусто"
@@ -224,10 +232,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/history_report_mounthly"
+            android:text="@string/statistic_report_weekly"
             android:textSize="14sp"
             android:textColor="@color/black" />
         <TextView
+            android:id="@+id/weekly_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Пусто"
@@ -250,16 +259,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/history_report_average_finish"
+            android:text="@string/statistic_report_average_finish"
             android:textSize="14sp"
             android:textColor="@color/black" />
         <TextView
+            android:id="@+id/average_finish_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Пусто"
             android:textSize="14sp"
             android:gravity="end"
             android:layout_weight="1"
+            android:textColor="@color/primary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" %"
+            android:textSize="14sp"
+            android:gravity="end"
             android:textColor="@color/primary" />
     </LinearLayout>
     <View

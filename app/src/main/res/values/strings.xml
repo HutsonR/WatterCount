@@ -2,15 +2,15 @@
     <string name="app_name">Watter Track</string>
 
     <string name="stats_button">Статистика</string>
-    <string name="history_text">История выпитой воды</string>
+    <string name="history_text">История выпитой воды за сегодня</string>
     <string name="history_change">На какое значение Вы хотите изменить?</string>
     <string name="history_new_value">Новое значение:</string>
     
-    <string name="history_weekly_title">Еженедельное завершение</string>
-    <string name="history_report_title">Отчёт о потреблении воды</string>
-    <string name="history_report_weekly">Средненедельный</string>
-    <string name="history_report_mounthly">Среднемесячный</string>
-    <string name="history_report_average_finish">Среднее завершение</string>
+    <string name="statistic_weekly_title">Еженедельное завершение</string>
+    <string name="statistic_report_title">Отчёт о потреблении воды</string>
+    <string name="statistic_last_day">Последний день</string>
+    <string name="statistic_report_weekly">Средненедельный</string>
+    <string name="statistic_report_average_finish">Среднее завершение</string>
 
     <string name="add_fragment_title">Сколько воды Вы выпили?</string>
     <string name="custom_value">Свое значение:</string>
