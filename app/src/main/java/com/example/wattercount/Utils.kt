@@ -11,20 +11,34 @@ object Utils {
     private val TAG = "debugTag"
 
     fun lastDrunkWaterResult(dataList: List<StatisticItem>): String {
-        val lastValue = dataList.first().dayValue.toString()
-        return lastValue
+        if (dataList.isNotEmpty()) {
+            val lastValue = dataList.first().dayValue.toString()
+            return lastValue
+        } else {
+            return "0"
+        }
     }
 
     fun calculateWeeklyResult(dataList: List<StatisticItem>): String {
-        val sumAllDataValue = dataList.sumOf { it.dayValue.toInt() }
-        val calcWeek = (sumAllDataValue / 7).toString()
-        return calcWeek
+        if (dataList.isNotEmpty()) {
+            val sumAllDataValue = dataList.sumOf { it.dayValue.toInt() }
+            val calcWeek = (sumAllDataValue / 7).toString()
+            return calcWeek
+        } else {
+            return "0"
+        }
     }
 
-    fun calculateAverageFinish(): Int {
-        // Вычислите среднее значение завершения на основе данных из dataList
-        // Верните результат в виде числа с плавающей запятой (Float)
-        return TODO("Provide the return value")
+    fun calculateAverageFinish(dataList: List<StatisticItem>): String {
+        if (dataList.isNotEmpty()) {
+            val finishDayArray = dataList.map { it.isFinishDay }.toTypedArray()
+            val convertedArray = finishDayArray.map { if (it) 1 else 0 }.toIntArray()
+            val allFinishSum = convertedArray.sum().toFloat()
+            val resFinishDay = ((allFinishSum / 7) * 100).toInt().toString()
+            return resFinishDay
+        } else {
+            return "0"
+        }
     }
 
     fun isDifferentDate(context: Context): Boolean {
@@ -36,22 +50,22 @@ object Utils {
         if (SharedPreferencesHelper.getOldDateValue(context) != null) {
             oldDate = SharedPreferencesHelper.getOldDateValue(context).toString()
         }
-        Log.v(TAG, "currentDate $currentDate")
-        Log.v(TAG, "oldDate $oldDate")
         if (currentDate == oldDate) {
             return false
         } else {
             oldDate = currentDate
+            SharedPreferencesHelper.setOldDateValue(context, oldDate)
             return true
         }
     }
 
+//    проверка вывполнил ли норму выпитой воды для finishDay
     fun isFinish(currentWaterValue: String, finishWaterValue: String): Boolean {
         return currentWaterValue >= finishWaterValue
     }
 
-    fun addStatsData(dataList: MutableList<StatisticItem>, database: AppDatabase, dayValue: Int, finishDay: Boolean) {
-        val statsItem = StatisticItem(dayValue = dayValue.toString(), finishDay = finishDay)
+    fun addStatsData(dataList: MutableList<StatisticItem>, database: AppDatabase, dayValue: Int, finishDay: Boolean, dayOfWeek: Int) {
+        val statsItem = StatisticItem(dayValue = dayValue.toString(), isFinishDay = finishDay, dayOfWeek = dayOfWeek)
         // Сохранение элемента в базе данных
         GlobalScope.launch {
             database.statsItemDao().insert(statsItem)

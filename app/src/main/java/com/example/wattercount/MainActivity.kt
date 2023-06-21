@@ -13,7 +13,6 @@ import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
-import com.example.wattercount.entities.StatisticItem
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
     private lateinit var binding: ActivityMainBinding
     private var currentDrinkCount = "0"
+    private var finalCountWater = "0"
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HistoryAdapter
     private var dataList: MutableList<HistoryItem> = mutableListOf()
@@ -47,11 +47,16 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             dataList.addAll(historyItems)
             adapter.notifyDataSetChanged()
             updateCurrentCountWater()
+
+            Log.v(TAG, "currentDrinkCount oncreate $currentDrinkCount")
+            checkDayUpdate()
         }
 
         setHistoryRecycler()
 
-        val finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
+        currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
+        finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this).toString()
+
         binding.finalCountWater.text = finalCountWater.toString()
         binding.percentCountWater.text = "${calcPercent()}%"
 
@@ -64,9 +69,8 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         binding.customPopupAdd.setOnClickListener {
             VariableDialogFragment(R.layout.add_fragment).show(supportFragmentManager, "add fragment")
         }
-        val test: Boolean = Utils.isDifferentDate(this)
-        Log.v(TAG, "test $test")
         setupStandartAddButton()
+
     }
 
 
@@ -167,6 +171,17 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
         binding.currentCountWater.text = currentDrinkCount
         binding.percentCountWater.text = "${calcPercent()}%"
+    }
+
+
+    private fun checkDayUpdate() {
+        if (Utils.isDifferentDate(this) == true) {
+            val finishDay = Utils.isFinish(currentDrinkCount, finalCountWater)
+            val calendar = Calendar.getInstance()
+            val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
+            val dataStatsList = DataStatsHolder.dataStatsList
+            Utils.addStatsData(dataStatsList, database, currentDrinkCount.toInt(), finishDay, dayOfWeek - 1)
+        }
     }
 
 

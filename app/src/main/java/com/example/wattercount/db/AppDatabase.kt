@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.entities.StatisticItem
 
-@Database(entities = [HistoryItem::class, StatisticItem::class], version = 2)
+@Database(entities = [HistoryItem::class, StatisticItem::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyItemDao(): HistoryItemDao
     abstract fun statsItemDao(): StatisticItemDao

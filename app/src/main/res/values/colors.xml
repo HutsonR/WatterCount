@@ -5,6 +5,8 @@
     <color name="blackText">#FF000000</color>
     <color name="backgroundMain">#FFFFFFFF</color>
     <color name="backgroundSplash">#FFFFFF</color>
+    <color name="dayInactive">#EDF9FF</color>
+    <color name="divider">#E5E7EA</color>
     <color name="primary">#02A4CD</color>
     <color name="backgroundBlue">#9DEBFF</color>
     <color name="textGray">#A4A8AC</color>
