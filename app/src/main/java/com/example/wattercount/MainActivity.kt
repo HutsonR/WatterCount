@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     private val TAG = "debugTag"
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var currentDate: String
     private var currentDrinkCount = "0"
     private var finalCountWater = "0"
     private lateinit var recyclerView: RecyclerView
@@ -34,43 +35,60 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        database = AppDatabase.getInstance(this)
+
+        onceSetFinalWaterCount()
+
+        setStatsListener()
+
+        GlobalScope.launch {
+            // Добавление при запуске всех элементов в историю
+            val historyItems = database.historyItemDao().getAll()
+            dataList.addAll(historyItems)
+            adapter.notifyDataSetChanged()
+            // Обновляем текущее значение воды
+            updateCurrentCountWater()
+            Log.v(TAG, "currentDrinkCount oncreate $currentDrinkCount")
+            // Проверяем изменен ли день
+            checkDayUpdate()
+        }
+
+        setDate()
+        setCountWater()
+        setAddButton()
+        setStandartAddButton()
+        setHistoryRecycler()
+    }
+
+
+    private fun onceSetFinalWaterCount() {
         val setFinalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
         if (setFinalCountWater == 0) {
             ConfirmFinalWaterCountFragment(R.layout.final_count_fragment).show(supportFragmentManager, "final water")
         }
+    }
 
-        database = AppDatabase.getInstance(this)
-        setStatsListener()
 
-        GlobalScope.launch {
-            val historyItems = database.historyItemDao().getAll()
-            dataList.addAll(historyItems)
-            adapter.notifyDataSetChanged()
-            updateCurrentCountWater()
-
-            Log.v(TAG, "currentDrinkCount oncreate $currentDrinkCount")
-            checkDayUpdate()
-        }
-
-        setHistoryRecycler()
-
+    private fun setCountWater() {
         currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
         finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this).toString()
-
-        binding.finalCountWater.text = finalCountWater.toString()
+        binding.finalCountWater.text = finalCountWater
         binding.percentCountWater.text = "${calcPercent()}%"
+    }
 
 
+    private fun setDate() {
         // Установка текущей даты
-        val currentDate = getCurrentDate()
+        currentDate = getCurrentDate()
         SharedPreferencesHelper.setCurrentDateValue(this, currentDate)
         binding.currentDate.text = currentDate
+    }
 
+
+    private fun setAddButton() {
         binding.customPopupAdd.setOnClickListener {
             VariableDialogFragment(R.layout.add_fragment).show(supportFragmentManager, "add fragment")
         }
-        setupStandartAddButton()
-
     }
 
 
@@ -91,11 +109,6 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         return String.format("%02d.%02d.%02d", day, month, year)
     }
 
-//    fun onItemClick(article: Article) {
-//        val intent = Intent(this, NewsActivity::class.java)
-//        intent.putExtra("article", article)
-//        startActivity(intent)
-//    }
 
     private fun addHistoryItem(count: String) {
         val currentTime = Calendar.getInstance().time
@@ -121,7 +134,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    private fun setupStandartAddButton() {
+    private fun setStandartAddButton() {
         // Новый обработчик нажатий на маленький размер (150мл)
         binding.smallMlStandart.setOnClickListener {
             handleStandardButtonClick(150)
@@ -181,6 +194,9 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
             val dataStatsList = DataStatsHolder.dataStatsList
             Utils.addStatsData(dataStatsList, database, currentDrinkCount.toInt(), finishDay, dayOfWeek - 1)
+
+            // Очистка текущих значений
+            // TODO вызвать удаление из HistoryItemDao
         }
     }
 
