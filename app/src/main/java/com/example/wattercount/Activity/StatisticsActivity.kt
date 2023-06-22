@@ -37,16 +37,11 @@ class StatisticsActivity : AppCompatActivity() {
         database = AppDatabase.getInstance(this)
 
         CoroutineScope(Dispatchers.Main).launch {
-            Log.v(TAG, "before recover $dataStatsList")
+//            database.statsItemDao().deleteAll()
             recoverStatsList()
-            Log.v(TAG, "after recover $dataStatsList")
             DataStatsHolder.dataStatsList = dataStatsList
-            Log.v(TAG, "after holder $dataStatsList")
-//            Utils.addStatsData(dataList, database, 1800, true, 3)
-//            Utils.addStatsData(dataList, database, 1300, false, 1)
-//            Utils.addStatsData(dataList, database, 2000, true, 2)
 
-            if (dataStatsList != null) {
+            if (dataStatsList.isNotEmpty()) {
                 setBackgroundForDayOfWeek()
                 binding.lastDayResult.text = "${Utils.lastDrunkWaterResult(dataStatsList)} ml"
                 binding.weeklyResult.text = "${Utils.calculateWeeklyResult(dataStatsList)} ml / день"
@@ -64,34 +59,36 @@ class StatisticsActivity : AppCompatActivity() {
 
 
     private fun setBackgroundForDayOfWeek() {
-        val dayArray = dataStatsList.map { it.dayOfWeek }.toIntArray()
-        for (day in dayArray) {
-            when (day) {
-                1 -> {
-                    binding.imageView1.setBackgroundResource(R.drawable.day_finish)
-                }
-                2 -> {
-                    binding.imageView2.setBackgroundResource(R.drawable.day_finish)
-                }
-                3 -> {
-                    binding.imageView3.setBackgroundResource(R.drawable.day_finish)
-                }
-                4 -> {
-                    binding.imageView4.setBackgroundResource(R.drawable.day_finish)
-                }
-                5 -> {
-                    binding.imageView5.setBackgroundResource(R.drawable.day_finish)
-                }
-                6 -> {
-                    binding.imageView6.setBackgroundResource(R.drawable.day_finish)
-                }
-                7 -> {
-                    binding.imageView7.setBackgroundResource(R.drawable.day_finish)
-                }
-                else -> {
-                    val currentDay = "imageView$day"
-                    val imageViewId = resources.getIdentifier(currentDay, "id", packageName)
-                    binding.root.findViewById<ImageView>(imageViewId)?.setBackgroundResource(R.drawable.day_not_finish)
+        if (dataStatsList[0].isFinishDay == true) {
+            val dayArray = dataStatsList.map { it.dayOfWeek }.toIntArray()
+            for (day in dayArray) {
+                when (day) {
+                    1 -> {
+                        binding.imageView1.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    2 -> {
+                        binding.imageView2.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    3 -> {
+                        binding.imageView3.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    4 -> {
+                        binding.imageView4.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    5 -> {
+                        binding.imageView5.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    6 -> {
+                        binding.imageView6.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    7 -> {
+                        binding.imageView7.setBackgroundResource(R.drawable.day_finish)
+                    }
+                    else -> {
+                        val currentDay = "imageView$day"
+                        val imageViewId = resources.getIdentifier(currentDay, "id", packageName)
+                        binding.root.findViewById<ImageView>(imageViewId)?.setBackgroundResource(R.drawable.day_not_finish)
+                    }
                 }
             }
         }

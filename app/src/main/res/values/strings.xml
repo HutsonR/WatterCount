@@ -5,7 +5,8 @@
     <string name="history_text">История выпитой воды за сегодня</string>
     <string name="history_change">На какое значение Вы хотите изменить?</string>
     <string name="history_new_value">Новое значение:</string>
-    
+
+    <string name="statistic_activity_title">Статистика</string>
     <string name="statistic_weekly_title">Еженедельное завершение</string>
     <string name="statistic_report_title">Отчёт о потреблении воды</string>
     <string name="statistic_last_day">Последний день</string>

@@ -13,8 +13,11 @@ import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -48,9 +51,10 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             adapter.notifyDataSetChanged()
             // Обновляем текущее значение воды
             updateCurrentCountWater()
-            Log.v(TAG, "currentDrinkCount oncreate $currentDrinkCount")
             // Проверяем изменен ли день
             checkDayUpdate()
+            // Обновляем текущее значение воды после проверки смены дня
+            updateCurrentCountWater()
         }
 
         setDate()
@@ -193,10 +197,18 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             val calendar = Calendar.getInstance()
             val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
             val dataStatsList = DataStatsHolder.dataStatsList
-            Utils.addStatsData(dataStatsList, database, currentDrinkCount.toInt(), finishDay, dayOfWeek - 1)
+            Utils.addStatsData(dataStatsList, database, currentDrinkCount.toInt(), finishDay, dayOfWeek)
 
             // Очистка текущих значений
-            // TODO вызвать удаление из HistoryItemDao
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    database.historyItemDao().deleteAll()
+                }
+
+                // Обновление списка и адаптера
+                dataList.clear()
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 
