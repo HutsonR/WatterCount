@@ -21,8 +21,8 @@ object Utils {
 
     fun calculateWeeklyResult(dataList: List<StatisticItem>): String {
         if (dataList.isNotEmpty()) {
-            val sumAllDataValue = dataList.sumOf { it.dayValue.toInt() }
-            val calcWeek = (sumAllDataValue / 7).toString()
+            val sumAllDayValue = dataList.sumOf { it.dayValue.toInt() }
+            val calcWeek = (sumAllDayValue / 7).toString()
             return calcWeek
         } else {
             return "0"
@@ -61,11 +61,11 @@ object Utils {
 
 //    проверка вывполнил ли норму выпитой воды для finishDay
     fun isFinish(currentWaterValue: String, finishWaterValue: String): Boolean {
-        return currentWaterValue >= finishWaterValue
+        return currentWaterValue.toInt() >= finishWaterValue.toInt()
     }
 
     fun addStatsData(dataList: MutableList<StatisticItem>, database: AppDatabase, dayValue: Int, finishDay: Boolean, dayOfWeek: Int) {
-        val statsItem = StatisticItem(dayValue = dayValue.toString(), isFinishDay = finishDay, dayOfWeek = dayOfWeek)
+        val statsItem = StatisticItem(dayValue = dayValue.toString(), isFinishDay = finishDay, dayOfWeek = dayOfWeek - 2)
         // Сохранение элемента в базе данных
         GlobalScope.launch {
             database.statsItemDao().insert(statsItem)

@@ -18,6 +18,9 @@ interface HistoryItemDao {
     @Query("DELETE FROM history_items WHERE id = :itemId")
     suspend fun deleteById(itemId: Int)
 
+    @Query("DELETE FROM history_items")
+    suspend fun deleteAll()
+
     @Update
     fun update(historyItem: HistoryItem)
 }
