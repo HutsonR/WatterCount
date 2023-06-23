@@ -298,4 +298,29 @@
         android:layout_height="1dp"
         android:background="@color/divider" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/hint_background"
+        android:layout_margin="20dp"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="25dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_hint_title"
+            android:textSize="12sp"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/primary"/>
+        <TextView
+            android:id="@+id/randomHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/statistic_hint"
+            android:textSize="14sp" />
+    </LinearLayout>
 </LinearLayout>

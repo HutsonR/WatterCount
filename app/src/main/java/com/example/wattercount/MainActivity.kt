@@ -13,6 +13,7 @@ import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
+import com.example.wattercount.state.hints
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         database = AppDatabase.getInstance(this)
 
         onceSetFinalWaterCount()
-
+        hintUpdate()
         setStatsListener()
 
         GlobalScope.launch {
@@ -64,6 +65,11 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         setHistoryRecycler()
     }
 
+
+    private fun hintUpdate() {
+        val randomHint = hints.random()
+        binding.randomHint.text = randomHint.text
+    }
 
     private fun onceSetFinalWaterCount() {
         val setFinalCountWater = SharedPreferencesHelper.getFinalWaterCount(this)
