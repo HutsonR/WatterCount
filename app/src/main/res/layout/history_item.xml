@@ -57,9 +57,9 @@
             android:layout_height="45dp"
             android:backgroundTint="@color/buttonBackgroundInactive"
             android:contentDescription="Редактировать объем"
-            android:padding="14dp"
+            android:padding="12dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_change"
+            android:src="@drawable/ic_delete"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 </LinearLayout>

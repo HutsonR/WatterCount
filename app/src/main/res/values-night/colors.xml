@@ -6,6 +6,7 @@
     <color name="blackText">#FF000000</color>
     <color name="backgroundSplash">#05090E</color>
     <color name="dayInactive">#131A22</color>
+    <color name="iconColor">#FFFFFFFF</color>
     <color name="divider">#131A22</color>
     <color name="primary">#64ACFF</color>
     <color name="backgroundBlue">#3D546E</color>
