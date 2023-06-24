@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val db: AppDatabase, private val mainActivity: MainActivity) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
     private val TAG = "debugTag"
+    private var isLastItem = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder  {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.history_item, parent, false)
         return HistoryViewHolder(view)
@@ -47,6 +48,14 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
 
             popupMenu.show()
         }
+
+        isLastItem = position == dataList.size - 1
+
+        if (isLastItem) {
+            holder.separatorView.visibility = View.GONE
+        } else {
+            holder.separatorView.visibility = View.VISIBLE
+        }
     }
 
     private fun deleteHistoryItem(historyItem: HistoryItem) {
@@ -67,5 +76,6 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
         val timeTextView: TextView = itemView.findViewById(R.id.history_drink_time)
         val countTextView: TextView = itemView.findViewById(R.id.history_drink_count)
         val editButton: ImageButton = itemView.findViewById(R.id.history_drink_edit)
+        val separatorView: View = itemView.findViewById(R.id.item_separator)
     }
 }
