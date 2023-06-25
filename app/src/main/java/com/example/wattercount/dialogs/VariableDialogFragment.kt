@@ -127,9 +127,9 @@ class VariableDialogFragment(private val layoutResourceId: Int) : DialogFragment
 
     private fun handleSaveButtonClicked() {
         if (selectedButtonId != 0)
-            dialogListener.onDialogResult(selectedRadioButtonTag)
+            dialogListener.onConfirmAddDialogResult(selectedRadioButtonTag)
         else if (editTextValue.isNotEmpty()) {
-            dialogListener.onDialogResult(editTextValue)
+            dialogListener.onConfirmAddDialogResult(editTextValue)
         }
     }
 }

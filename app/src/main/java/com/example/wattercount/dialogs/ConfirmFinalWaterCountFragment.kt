@@ -80,7 +80,7 @@ class ConfirmFinalWaterCountFragment(private val layoutResourceId: Int) : Dialog
 
     private fun handleSaveButtonClicked() {
         if (editTextValue.isNotEmpty()) {
-            dialogListener.onFinalResult(editTextValue)
+            dialogListener.onConfirmFinalResult(editTextValue)
         }
     }
 }

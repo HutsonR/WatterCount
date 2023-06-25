@@ -2,7 +2,6 @@ package com.example.wattercount
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,15 +56,15 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             // Обновляем текущее значение воды
             updateCurrentCountWater()
             // Проверяем изменен ли день
-            checkDayUpdate()
+            addDataToStats()
             // Обновляем текущее значение воды после проверки смены дня
             updateCurrentCountWater()
         }
 
-        setDate()
-        setCountWater()
+        setCurrentDate()
+        setWaterCounts()
         setAddButton()
-        setStandartAddButton()
+        setQuickAddButton()
         setHistoryRecycler()
     }
 
@@ -82,8 +81,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         }
     }
 
-
-    private fun setCountWater() {
+    private fun setWaterCounts() {
         currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
         finalCountWater = SharedPreferencesHelper.getFinalWaterCount(this).toString()
         binding.finalCountWater.text = finalCountWater
@@ -91,7 +89,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    private fun setDate() {
+    private fun setCurrentDate() {
         // Установка текущей даты
         currentDate = getCurrentDate()
         SharedPreferencesHelper.setCurrentDateValue(this, currentDate)
@@ -106,12 +104,11 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    override fun onFinalResult(data: String) {
+    override fun onConfirmFinalResult(data: String) {
         var finalCountWater = binding.finalCountWater.text
         finalCountWater = data
         val finalCountWaterInt = finalCountWater.toInt()
         SharedPreferencesHelper.setFinalWaterCount(this, finalCountWaterInt)
-
     }
 
 
@@ -140,7 +137,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    override fun onDialogResult(data: String) {
+    override fun onConfirmAddDialogResult(data: String) {
         addHistoryItem(data)
         currentDrinkCount = (binding.currentCountWater.text.toString().toInt() + data.toInt()).toString()
         binding.currentCountWater.text = currentDrinkCount
@@ -148,7 +145,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    private fun setStandartAddButton() {
+    private fun setQuickAddButton() {
         // Новый обработчик нажатий на маленький размер (150мл)
         binding.smallMlStandart.setOnClickListener {
             handleStandardButtonClick(150)
@@ -165,7 +162,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
             addHistoryItem(350.toString())
         }
     }
-
+//    Обработка нажатия на быструю кнопку добавления
     private fun handleStandardButtonClick(size: Int) {
         val currentCount = binding.currentCountWater.text.toString().toInt()
         val newCount = currentCount + size
@@ -193,7 +190,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         }
     }
 
-
+    // Обновление текущего значения выпитой воды из истории
     fun updateCurrentCountWater() {
         currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
         binding.currentCountWater.text = currentDrinkCount
@@ -201,7 +198,7 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     }
 
 
-    private fun checkDayUpdate() {
+    private fun addDataToStats() {
         if (Utils.isDifferentDate(this)) {
             val finishDay = Utils.isFinish(currentDrinkCount, finalCountWater)
             val dataStatsList = DataStatsHolder.dataStatsList
