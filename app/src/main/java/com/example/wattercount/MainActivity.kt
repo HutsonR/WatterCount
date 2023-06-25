@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wattercount.Activity.StatisticsActivity
 import com.example.wattercount.Adapter.HistoryAdapter
+import com.example.wattercount.Statistics.DataStatsHolder
+import com.example.wattercount.Statistics.Utils
 import com.example.wattercount.databinding.ActivityMainBinding
 import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         database = AppDatabase.getInstance(this)
+
+//        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
 
         onceSetFinalWaterCount()
         hintUpdate()
@@ -198,12 +202,13 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
 
 
     private fun checkDayUpdate() {
-        if (Utils.isDifferentDate(this) == true) {
+        if (Utils.isDifferentDate(this)) {
             val finishDay = Utils.isFinish(currentDrinkCount, finalCountWater)
-            val calendar = Calendar.getInstance()
-            val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
             val dataStatsList = DataStatsHolder.dataStatsList
-            Utils.addStatsData(dataStatsList, database, currentDrinkCount.toInt(), finishDay, dayOfWeek)
+            val date = SharedPreferencesHelper.getOldDateValue(this)!!
+            val fomattedDate = date.substring(0, date.length - 3)
+
+            Utils.addStatsData(dataStatsList, database, fomattedDate, currentDrinkCount.toInt(), finishDay, calcDayOfWeek())
 
             // Очистка текущих значений
             runBlocking {
@@ -218,6 +223,22 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         }
     }
 
+    private fun calcDayOfWeek(): Int {
+        val calendar = Calendar.getInstance()
+        val dayOfWeek = calendar[Calendar.DAY_OF_WEEK]
+        // Преобразование значения дня недели в формат от 1 (понедельник) до 7 (воскресенье)
+        val adjustedDayOfWeek = if (dayOfWeek == Calendar.SUNDAY) 7 else dayOfWeek - 1
+
+        var calcDay = adjustedDayOfWeek
+
+        if (adjustedDayOfWeek == 1) {
+            calcDay = 7
+        } else {
+            calcDay -= 1
+        }
+
+        return calcDay
+    }
 
     private fun setHistoryRecycler() {
         recyclerView = binding.recycleHistory

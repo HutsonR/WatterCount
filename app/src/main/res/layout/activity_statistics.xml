@@ -30,7 +30,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/round_corner_10"
         android:orientation="vertical"
         android:elevation="@dimen/elevation_s"
@@ -203,6 +206,36 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/stats_history_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/statistic_history_title"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/montserrat_medium"/>
+    <TextView
+        android:id="@+id/stats_history_title_blank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Как-то пустовато здесь"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/textGray"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/montserrat"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleStats"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
