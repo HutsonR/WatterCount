@@ -1,7 +1,8 @@
-package com.example.wattercount
+package com.example.wattercount.Statistics
 
 import android.content.Context
 import android.util.Log
+import com.example.wattercount.SharedPreferencesHelper
 import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.entities.StatisticItem
 import kotlinx.coroutines.GlobalScope
@@ -64,12 +65,16 @@ object Utils {
         return currentWaterValue.toInt() >= finishWaterValue.toInt()
     }
 
-    fun addStatsData(dataList: MutableList<StatisticItem>, database: AppDatabase, dayValue: Int, finishDay: Boolean, dayOfWeek: Int) {
-        val statsItem = StatisticItem(dayValue = dayValue.toString(), isFinishDay = finishDay, dayOfWeek = dayOfWeek - 2)
+    fun addStatsData(dataList: MutableList<StatisticItem>, database: AppDatabase, date: String, dayValue: Int, finishDay: Boolean, dayOfWeek: Int) {
+        val statsItem = StatisticItem(date = date, dayValue = dayValue.toString(), isFinishDay = finishDay, dayOfWeek = dayOfWeek)
+//        val statsItem2 = StatisticItem(date = "26.06", dayValue = "1300", isFinishDay = false, dayOfWeek = 1)
         // Сохранение элемента в базе данных
         GlobalScope.launch {
             database.statsItemDao().insert(statsItem)
+//            database.statsItemDao().insert(statsItem2)
         }
+        // Передаем значение в dataStatsHolder
         dataList.add(statsItem)
+//        dataList.add(statsItem2)
     }
 }

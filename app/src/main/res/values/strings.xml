@@ -9,6 +9,7 @@
 
     <string name="statistic_activity_title">Статистика</string>
     <string name="statistic_weekly_title">Еженедельное завершение</string>
+    <string name="statistic_history_title">История выпитой воды за неделю</string>
     <string name="statistic_report_title">Отчёт о потреблении воды</string>
     <string name="statistic_last_day">Последний день</string>
     <string name="statistic_report_weekly">Средненедельный</string>

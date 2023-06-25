@@ -2,12 +2,17 @@ package com.example.wattercount.Activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wattercount.DataStatsHolder
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.wattercount.Adapter.HistoryAdapter
+import com.example.wattercount.Adapter.StatisticAdapter
+import com.example.wattercount.Statistics.DataStatsHolder
 import com.example.wattercount.R
-import com.example.wattercount.Utils
+import com.example.wattercount.Statistics.Utils
 import com.example.wattercount.databinding.ActivityStatisticsBinding
 import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.entities.StatisticItem
@@ -22,6 +27,8 @@ class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticsBinding
     private var dataStatsList: MutableList<StatisticItem> = mutableListOf()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: StatisticAdapter
     private lateinit var database: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,15 +47,57 @@ class StatisticsActivity : AppCompatActivity() {
 //            database.statsItemDao().deleteAll()
             recoverStatsList()
             DataStatsHolder.dataStatsList = dataStatsList
-
+//            if (isWeekFinished(dataStatsList)) {
+//                clearDatabase(dataStatsList)
+//            }
             if (dataStatsList.isNotEmpty()) {
                 setBackgroundForDayOfWeek()
                 binding.lastDayResult.text = "${Utils.lastDrunkWaterResult(dataStatsList)} ml"
                 binding.weeklyResult.text = "${Utils.calculateWeeklyResult(dataStatsList)} ml / день"
                 binding.averageFinishResult.text = "${Utils.calculateAverageFinish(dataStatsList)}"
             }
+            setStatsRecycler()
         }
     }
+
+    private fun setStatsRecycler() {
+        recyclerView = binding.recycleStats
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        adapter = StatisticAdapter(dataStatsList)
+        recyclerView.adapter = adapter
+
+        if (dataStatsList.isEmpty()) {
+            binding.statsHistoryTitleBlank.visibility = View.VISIBLE
+        } else {
+            binding.statsHistoryTitleBlank.visibility = View.GONE
+        }
+    }
+
+    private fun isWeekFinished(dataStatsList: MutableList<StatisticItem>): Boolean {
+        if (dataStatsList.first().dayOfWeek == 1 || dataStatsList.last().dayOfWeek == 1) {
+            return true
+        }
+        return false
+    }
+
+    private suspend fun clearDatabase(dataStatsList: MutableList<StatisticItem>) {
+        withContext(Dispatchers.IO) {
+            val tempDayValue = dataStatsList.first()
+            database.statsItemDao().deleteAll()
+            database.statsItemDao().insert(tempDayValue)
+            dataStatsList.clear()
+            dataStatsList.add(tempDayValue)
+            DataStatsHolder.dataStatsList = dataStatsList
+        }
+    }
+
+//    CoroutineScope(Dispatchers.Main).launch {
+//        withContext(Dispatchers.IO) {
+//            // Код, выполняющийся в фоновом потоке, например, операции с базой данных
+//        }
+//        // Код, выполняющийся в главном потоке, например, обновление пользовательского интерфейса
+//    }
 
     private suspend fun recoverStatsList() {
         withContext(Dispatchers.IO) {
@@ -57,11 +106,11 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setBackgroundForDayOfWeek() {
-        if (dataStatsList[0].isFinishDay == true) {
-            val dayArray = dataStatsList.map { it.dayOfWeek }.toIntArray()
-            for (day in dayArray) {
+        val dayArray: IntArray = dataStatsList.map { it.dayOfWeek }.toIntArray()
+        for (dayIndex in dayArray.indices) {
+            val day = dayArray[dayIndex]
+            if (dataStatsList[dayIndex].isFinishDay) {
                 when (day) {
                     1 -> {
                         binding.imageView1.setBackgroundResource(R.drawable.day_finish)
@@ -90,6 +139,8 @@ class StatisticsActivity : AppCompatActivity() {
                         binding.root.findViewById<ImageView>(imageViewId)?.setBackgroundResource(R.drawable.day_not_finish)
                     }
                 }
+            } else {
+                continue
             }
         }
     }
