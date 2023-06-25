@@ -33,7 +33,7 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
         holder.editButton.setOnClickListener {
             val popupMenu = PopupMenu(holder.editButton.context, holder.editButton)
             val menuInflater = popupMenu.menuInflater
-            menuInflater.inflate(R.menu.change_menu, popupMenu.menu)
+            menuInflater.inflate(R.menu.delete_menu, popupMenu.menu)
 
             popupMenu.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {

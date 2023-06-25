@@ -99,6 +99,7 @@ class StatisticsActivity : AppCompatActivity() {
 //        // Код, выполняющийся в главном потоке, например, обновление пользовательского интерфейса
 //    }
 
+    // Восстановление статистики из базы данных
     private suspend fun recoverStatsList() {
         withContext(Dispatchers.IO) {
             val statisticItems = database.statsItemDao().getAll()

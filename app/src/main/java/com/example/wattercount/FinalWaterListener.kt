@@ -1,5 +1,5 @@
 package com.example.wattercount
 
 interface FinalWaterListener {
-    fun onFinalResult(data: String)
+    fun onConfirmFinalResult(data: String)
 }
