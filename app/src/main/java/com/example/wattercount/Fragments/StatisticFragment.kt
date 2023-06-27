@@ -33,7 +33,11 @@ class StatisticFragment : Fragment() {
     ): View? {
         binding = FragmentStatisticBinding.inflate(inflater)
         return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        database = AppDatabase.getInstance(requireContext())
         CoroutineScope(Dispatchers.Main).launch {
 //            database.statsItemDao().deleteAll()
             recoverStatsList()
@@ -51,11 +55,6 @@ class StatisticFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        database = AppDatabase.getInstance(requireContext())
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() = StatisticFragment()
@@ -69,9 +68,9 @@ class StatisticFragment : Fragment() {
         recyclerView.adapter = adapter
 
         if (dataStatsList.isEmpty()) {
-            binding.statsHistoryTitleBlank.visibility = View.VISIBLE
+            binding.statsHistoryBlank.visibility = View.VISIBLE
         } else {
-            binding.statsHistoryTitleBlank.visibility = View.GONE
+            binding.statsHistoryBlank.visibility = View.GONE
         }
     }
 
