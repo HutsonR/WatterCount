@@ -1,19 +1,18 @@
-package com.example.wattercount.Activity
+package com.example.wattercount.Fragments
 
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageButton
+import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.Adapter.StatisticAdapter
-import com.example.wattercount.Statistics.DataStatsHolder
 import com.example.wattercount.R
+import com.example.wattercount.Statistics.DataStatsHolder
 import com.example.wattercount.Statistics.Utils
-import com.example.wattercount.databinding.ActivityStatisticsBinding
+import com.example.wattercount.databinding.FragmentStatisticBinding
 import com.example.wattercount.db.AppDatabase
 import com.example.wattercount.entities.StatisticItem
 import kotlinx.coroutines.CoroutineScope
@@ -21,28 +20,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
-class StatisticsActivity : AppCompatActivity() {
-    private val TAG = "debugTag"
-
-    private lateinit var binding: ActivityStatisticsBinding
+class StatisticFragment : Fragment() {
+    private lateinit var binding: FragmentStatisticBinding
     private var dataStatsList: MutableList<StatisticItem> = mutableListOf()
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StatisticAdapter
     private lateinit var database: AppDatabase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityStatisticsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentStatisticBinding.inflate(inflater)
+        return binding.root
+    }
 
-        val closeButton = findViewById<ImageButton>(R.id.close_history_activity)
-        closeButton.setOnClickListener {
-            finish()
-        }
-
-        database = AppDatabase.getInstance(this)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        database = AppDatabase.getInstance(requireContext())
         CoroutineScope(Dispatchers.Main).launch {
 //            database.statsItemDao().deleteAll()
             recoverStatsList()
@@ -60,9 +55,14 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance() = StatisticFragment()
+    }
+
     private fun setStatsRecycler() {
         recyclerView = binding.recycleStats
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         adapter = StatisticAdapter(dataStatsList)
         recyclerView.adapter = adapter
@@ -136,7 +136,7 @@ class StatisticsActivity : AppCompatActivity() {
                     }
                     else -> {
                         val currentDay = "imageView$day"
-                        val imageViewId = resources.getIdentifier(currentDay, "id", packageName)
+                        val imageViewId = resources.getIdentifier(currentDay, "id", requireContext().packageName)
                         binding.root.findViewById<ImageView>(imageViewId)?.setBackgroundResource(R.drawable.day_not_finish)
                     }
                 }

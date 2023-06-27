@@ -9,4 +9,18 @@
 
     <style name="Theme.WatterCount" parent="Base.Theme.WatterCount" />
 
+    <style name="BottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/navigationBackgroundGray</item>
+        <item name="android:stateListAnimator">@null</item> <!-- Отключение аниматора -->
+        <item name="android:theme">@style/BottomNavigationTheme</item>
+    </style>
+
+    <style name="BottomNavigationTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/buttonBackgroundInactive</item>
+        <item name="colorOnPrimary">@color/primary</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <!-- остальные нужные атрибуты -->
+    </style>
+
 </resources>

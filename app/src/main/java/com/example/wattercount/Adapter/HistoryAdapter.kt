@@ -8,14 +8,14 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wattercount.MainActivity
+import com.example.wattercount.Fragments.HomeFragment
 import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.R
 import com.example.wattercount.db.AppDatabase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val db: AppDatabase, private val mainActivity: MainActivity) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
+class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val db: AppDatabase, private val homeFragment: HomeFragment) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
     private val TAG = "debugTag"
     private var isLastItem = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder  {
@@ -65,7 +65,7 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
         dataList.remove(historyItem)
         notifyDataSetChanged()
 
-        mainActivity.updateCurrentCountWater()
+        homeFragment.updateCurrentCountWater()
     }
 
     override fun getItemCount(): Int {

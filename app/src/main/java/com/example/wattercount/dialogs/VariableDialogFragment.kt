@@ -30,9 +30,9 @@ class VariableDialogFragment(private val layoutResourceId: Int) : DialogFragment
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            dialogListener = context as DialogListener
+            dialogListener = parentFragment as DialogListener
         } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement DialogListener")
+            throw ClassCastException("Parent fragment must implement DialogListener")
         }
     }
 
@@ -105,7 +105,6 @@ class VariableDialogFragment(private val layoutResourceId: Int) : DialogFragment
         val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
-
 
     private fun onButtonClicked(buttons: Array<Button>, clickedButton: Button) {
         selectedButtonId = clickedButton.id
