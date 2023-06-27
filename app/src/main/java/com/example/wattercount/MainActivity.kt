@@ -35,11 +35,14 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
     private lateinit var adapter: HistoryAdapter
     private var dataList: MutableList<HistoryItem> = mutableListOf()
     private lateinit var database: AppDatabase
+    private lateinit var notificationUtils: NotificationUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        notificationUtils = NotificationUtils(this)
+        notificationUtils.scheduleNotification()
         database = AppDatabase.getInstance(this)
 
 //        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
@@ -67,7 +70,6 @@ class MainActivity : AppCompatActivity(), DialogListener, FinalWaterListener {
         setQuickAddButton()
         setHistoryRecycler()
     }
-
 
     private fun hintUpdate() {
         val randomHint = hints.random()
