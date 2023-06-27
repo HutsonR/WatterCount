@@ -49,6 +49,9 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         database = AppDatabase.getInstance(requireContext())
+
+        //        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
+
         onceSetFinalWaterCount()
         hintUpdate()
         GlobalScope.launch {

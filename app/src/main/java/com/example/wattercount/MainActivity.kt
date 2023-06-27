@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-//        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
