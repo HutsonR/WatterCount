@@ -68,9 +68,9 @@ class StatisticFragment : Fragment() {
         recyclerView.adapter = adapter
 
         if (dataStatsList.isEmpty()) {
-            binding.statsHistoryTitleBlank.visibility = View.VISIBLE
+            binding.statsHistoryBlank.visibility = View.VISIBLE
         } else {
-            binding.statsHistoryTitleBlank.visibility = View.GONE
+            binding.statsHistoryBlank.visibility = View.GONE
         }
     }
 

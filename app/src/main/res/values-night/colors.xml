@@ -14,5 +14,5 @@
     <color name="red">#FF3E3E</color>
     <color name="buttonBackgroundInactive">#131A22</color>
     <color name="backgroundGray">#E5E7EA</color>
-    <color name="navigationBackgroundGray">#070707</color>
+    <color name="navigationBackgroundGray">#FF000000</color>
 </resources>
