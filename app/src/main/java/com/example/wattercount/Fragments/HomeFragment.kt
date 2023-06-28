@@ -196,6 +196,8 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
             val finishDay = Utils.isFinish(currentDrinkCount, finalCountWater)
             val dataStatsList = DataStatsHolder.dataStatsList
             val date = SharedPreferencesHelper.getOldDateValue(requireContext())!!
+            val oldDate = currentDate
+            SharedPreferencesHelper.setOldDateValue(requireContext(), oldDate)
             val formattedDate = date.substring(0, date.length - 3)
 
             Utils.addStatsData(dataStatsList, database, formattedDate, currentDrinkCount.toInt(), finishDay, calcDayOfWeek())

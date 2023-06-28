@@ -51,13 +51,7 @@ object Utils {
         if (SharedPreferencesHelper.getOldDateValue(context) != null) {
             oldDate = SharedPreferencesHelper.getOldDateValue(context).toString()
         }
-        if (currentDate == oldDate) {
-            return false
-        } else {
-            oldDate = currentDate
-            SharedPreferencesHelper.setOldDateValue(context, oldDate)
-            return true
-        }
+        return currentDate != oldDate
     }
 
 //    проверка вывполнил ли норму выпитой воды для finishDay
