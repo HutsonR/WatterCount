@@ -7,7 +7,7 @@
     <item android:title="Статистика"
         android:id="@+id/nav_stats"
         android:icon="@drawable/ic_stats"/>
-    <item android:title="Профиль"
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_user"/>
+<!--    <item android:title="Профиль"-->
+<!--        android:id="@+id/nav_profile"-->
+<!--        android:icon="@drawable/ic_user"/>-->
 </menu>

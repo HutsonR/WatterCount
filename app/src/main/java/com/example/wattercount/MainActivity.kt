@@ -1,6 +1,7 @@
 package com.example.wattercount
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.wattercount.Fragments.HomeFragment
@@ -13,10 +14,19 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "debugTag"
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var notificationUtils: NotificationUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        notificationUtils = NotificationUtils(this)
+        if (isFirstTimeLaunch()) {
+            notificationUtils.scheduleNotification()
+            SharedPreferencesHelper.setNotificationSchedule(this, false)
+        }
+
+
         setContentView(binding.root)
         replaceFragment(HomeFragment())
 
@@ -24,12 +34,16 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.nav_home -> replaceFragment(HomeFragment())
                 R.id.nav_stats -> replaceFragment(StatisticFragment())
-                R.id.nav_profile -> replaceFragment(ProfileFragment())
+//                R.id.nav_profile -> replaceFragment(ProfileFragment())
                 else -> {}
             }
             true
         }
 
+    }
+
+    private fun isFirstTimeLaunch(): Boolean {
+        return SharedPreferencesHelper.getNotificationSchedule(this) == true
     }
 
     private fun replaceFragment(fragment: Fragment) {
