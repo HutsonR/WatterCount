@@ -349,13 +349,7 @@
                 android:paddingVertical="15dp"
                 android:paddingHorizontal="25dp"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/statistic_hint_title"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/primary"/>
+
                 <TextView
                     android:id="@+id/randomHint"
                     android:layout_width="match_parent"
