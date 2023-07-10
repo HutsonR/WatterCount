@@ -1,15 +1,23 @@
 package com.example.wattercount.Fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.DialogListener
 import com.example.wattercount.FinalWaterListener
+import com.example.wattercount.NotificationReceiver
+import com.example.wattercount.NotificationUtils
 import com.example.wattercount.R
 import com.example.wattercount.SharedPreferencesHelper
 import com.example.wattercount.Statistics.DataStatsHolder
@@ -50,8 +58,7 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         super.onViewCreated(view, savedInstanceState)
         database = AppDatabase.getInstance(requireContext())
 
-        //        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
-
+//        SharedPreferencesHelper.setOldDateValue(requireContext(), "01.07.23")
         onceSetFinalWaterCount()
         hintUpdate()
         GlobalScope.launch {
@@ -152,6 +159,7 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         binding.smallMlStandart.setOnClickListener {
             handleStandardButtonClick(150)
             addHistoryItem(150.toString())
+//            NotificationUtils.showNotification()
         }
         // Новый обработчик нажатий на стандартный размер (250мл)
         binding.mediumMlStandart.setOnClickListener {
