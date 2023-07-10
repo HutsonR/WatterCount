@@ -26,6 +26,7 @@ class StatisticFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StatisticAdapter
     private lateinit var database: AppDatabase
+    private var isDataUpdated = false // Переменная для отслеживания обновления данных
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +41,11 @@ class StatisticFragment : Fragment() {
         database = AppDatabase.getInstance(requireContext())
         CoroutineScope(Dispatchers.Main).launch {
 //            database.statsItemDao().deleteAll()
-            recoverStatsList()
-            DataStatsHolder.dataStatsList = dataStatsList
 //            if (isWeekFinished(dataStatsList)) {
 //                clearDatabase(dataStatsList)
 //            }
+            recoverStatsList()
+            DataStatsHolder.dataStatsList = dataStatsList
             if (dataStatsList.isNotEmpty()) {
                 setBackgroundForDayOfWeek()
                 binding.lastDayResult.text = "${Utils.lastDrunkWaterResult(dataStatsList)} ml"
@@ -75,7 +76,7 @@ class StatisticFragment : Fragment() {
     }
 
     private fun isWeekFinished(dataStatsList: MutableList<StatisticItem>): Boolean {
-        if (dataStatsList.first().dayOfWeek == 1 || dataStatsList.last().dayOfWeek == 1) {
+        if (dataStatsList.first().dayOfWeek == 1) {
             return true
         }
         return false
@@ -91,13 +92,6 @@ class StatisticFragment : Fragment() {
             DataStatsHolder.dataStatsList = dataStatsList
         }
     }
-
-//    CoroutineScope(Dispatchers.Main).launch {
-//        withContext(Dispatchers.IO) {
-//            // Код, выполняющийся в фоновом потоке, например, операции с базой данных
-//        }
-//        // Код, выполняющийся в главном потоке, например, обновление пользовательского интерфейса
-//    }
 
     // Восстановление статистики из базы данных
     private suspend fun recoverStatsList() {

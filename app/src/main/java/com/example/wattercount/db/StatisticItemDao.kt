@@ -16,4 +16,7 @@ interface StatisticItemDao {
     @Query("DELETE FROM statistic_items")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM statistic_items WHERE id = :itemId")
+    suspend fun deleteById(itemId: Int)
+
 }
