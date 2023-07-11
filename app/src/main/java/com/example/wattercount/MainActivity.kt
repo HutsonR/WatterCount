@@ -21,11 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         notificationUtils = NotificationUtils(this)
-        if (isFirstTimeLaunch()) {
-            notificationUtils.scheduleNotification()
-            SharedPreferencesHelper.setNotificationSchedule(this, false)
-        }
-
 
         setContentView(binding.root)
         replaceFragment(HomeFragment())
@@ -40,10 +35,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-    }
-
-    private fun isFirstTimeLaunch(): Boolean {
-        return SharedPreferencesHelper.getNotificationSchedule(this) == true
     }
 
     private fun replaceFragment(fragment: Fragment) {
