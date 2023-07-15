@@ -28,6 +28,7 @@ class StatisticFragment : Fragment() {
     private lateinit var database: AppDatabase
     private var isDataUpdated = false // Переменная для отслеживания обновления данных
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
