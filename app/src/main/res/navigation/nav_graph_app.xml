@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/homeFragment3"
         android:name="com.example.wattercount.Fragments.HomeFragment"
-        android:label="fragment_home"
+        android:label="Water Track"
         tools:layout="@layout/fragment_home" />
     <navigation
         android:id="@+id/detailNested"
@@ -15,12 +15,12 @@
         <fragment
             android:id="@+id/detailFragment"
             android:name="com.example.wattercount.Fragments.DetailFragment"
-            android:label="fragment_detail"
+            android:label="Детали"
             tools:layout="@layout/fragment_detail" />
         <fragment
             android:id="@+id/statisticFragment3"
             android:name="com.example.wattercount.Fragments.StatisticFragment"
-            android:label="fragment_statistic"
+            android:label="Статистика"
             tools:layout="@layout/fragment_statistic">
             <action
                 android:id="@+id/action_statisticFragment3_to_detailFragment"
