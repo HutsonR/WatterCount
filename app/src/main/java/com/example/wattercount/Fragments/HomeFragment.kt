@@ -9,17 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wattercount.Adapter.HistoryAdapter
 import com.example.wattercount.DialogListener
-import com.example.wattercount.FinalWaterListener
 import com.example.wattercount.R
 import com.example.wattercount.SharedPreferencesHelper
 import com.example.wattercount.Statistics.DataStatsHolder
 import com.example.wattercount.Statistics.Utils
 import com.example.wattercount.databinding.FragmentHomeBinding
 import com.example.wattercount.db.AppDatabase
-import com.example.wattercount.dialogs.ConfirmFinalWaterCountFragment
 import com.example.wattercount.dialogs.VariableDialogFragment
 import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.state.hints
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,7 +27,7 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
+class HomeFragment : Fragment(), DialogListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var currentDate: String
     private var currentDrinkCount = "0"
@@ -51,10 +50,9 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         database = AppDatabase.getInstance(requireContext())
 
         //        SharedPreferencesHelper.setOldDateValue(this, "24.06.23")
-
-        onceSetFinalWaterCount()
         hintUpdate()
-        GlobalScope.launch {
+        val ioScope = CoroutineScope(Dispatchers.IO)
+        ioScope.launch {
             // Добавление при запуске всех элементов в историю
             val historyItems = database.historyItemDao().getAll()
             dataList.addAll(historyItems)
@@ -83,16 +81,10 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         binding.randomHint.text = randomHint.text
     }
 
-    private fun onceSetFinalWaterCount() {
-        val setFinalCountWater = SharedPreferencesHelper.getFinalWaterCount(requireContext())
-        if (setFinalCountWater == 0) {
-            ConfirmFinalWaterCountFragment(R.layout.final_count_fragment).show(childFragmentManager, "final water")
-        }
-    }
 
     private fun setWaterCounts() {
         currentDrinkCount = dataList.sumOf { it.count.toInt() }.toString()
-        finalCountWater = SharedPreferencesHelper.getFinalWaterCount(requireContext()).toString()
+        finalCountWater = "1800"
         binding.finalCountWater.text = finalCountWater
         binding.percentCountWater.text = "${calcPercent()}%"
     }
@@ -117,13 +109,6 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         binding.percentCountWater.text = "${calcPercent()}%"
     }
 
-    override fun onConfirmFinalResult(data: String) {
-        var finalCountWater = binding.finalCountWater.text
-        finalCountWater = data
-        val finalCountWaterInt = finalCountWater.toInt()
-        SharedPreferencesHelper.setFinalWaterCount(requireContext(), finalCountWaterInt)
-    }
-
     private fun getCurrentDate(): String {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR) % 100
@@ -138,8 +123,9 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
         val formattedTime = timeFormat.format(currentTime)
 
         val historyItem = HistoryItem(time = formattedTime, count = "$count")
-        // Сохранение элемента в базе данных
-        GlobalScope.launch {
+        val ioScope = CoroutineScope(Dispatchers.IO)
+
+        ioScope.launch {
             database.historyItemDao().insert(historyItem)
         }
 
@@ -198,7 +184,7 @@ class HomeFragment : Fragment(), DialogListener, FinalWaterListener {
             val date = SharedPreferencesHelper.getOldDateValue(requireContext())!!
             val oldDate = currentDate
             SharedPreferencesHelper.setOldDateValue(requireContext(), oldDate)
-            val formattedDate = date.substring(0, date.length - 3)
+            val formattedDate = if (date.length > 3) date.substring(0, date.length - 3) else date
 
             Utils.addStatsData(dataStatsList, database, formattedDate, currentDrinkCount.toInt(), finishDay, calcDayOfWeek())
 

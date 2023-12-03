@@ -2,11 +2,10 @@ package com.example.wattercount
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.wattercount.Fragments.HomeFragment
-import com.example.wattercount.Fragments.ProfileFragment
-import com.example.wattercount.Fragments.StatisticFragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.wattercount.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,26 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomeFragment())
 
-        binding.bottomNavigation.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.nav_home -> replaceFragment(HomeFragment())
-                R.id.nav_stats -> replaceFragment(StatisticFragment())
-                R.id.nav_profile -> replaceFragment(ProfileFragment())
-                else -> {}
-            }
-            true
-        }
-
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
-        fragmentTransaction.commit()
+        val bottomNavigationView: BottomNavigationView = binding.bottomNavigation
+        val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
+        bottomNavigationView.setupWithNavController(navController)
     }
 
 }

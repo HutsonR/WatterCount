@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wattercount.Adapter.StatisticAdapter
@@ -52,6 +53,10 @@ class StatisticFragment : Fragment() {
                 binding.averageFinishResult.text = "${Utils.calculateAverageFinish(dataStatsList)}"
             }
             setStatsRecycler()
+
+            binding.averageFinishResult.setOnClickListener {
+                findNavController().navigate(R.id.action_statisticFragment3_to_detailFragment)
+            }
         }
     }
 
