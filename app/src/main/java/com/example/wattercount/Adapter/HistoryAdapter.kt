@@ -12,6 +12,8 @@ import com.example.wattercount.Fragments.HomeFragment
 import com.example.wattercount.entities.HistoryItem
 import com.example.wattercount.R
 import com.example.wattercount.db.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -59,12 +61,11 @@ class HistoryAdapter(private val dataList: MutableList<HistoryItem>, private val
     }
 
     private fun deleteHistoryItem(historyItem: HistoryItem) {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             db.historyItemDao().deleteById(historyItem.id)
         }
         dataList.remove(historyItem)
         notifyDataSetChanged()
-
         homeFragment.updateCurrentCountWater()
     }
 

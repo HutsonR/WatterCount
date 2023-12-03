@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_app"
+    app:startDestination="@id/homeFragment3">
+    <fragment
+        android:id="@+id/homeFragment3"
+        android:name="com.example.wattercount.Fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <navigation
+        android:id="@+id/detailNested"
+        app:startDestination="@id/statisticFragment3">
+        <fragment
+            android:id="@+id/detailFragment"
+            android:name="com.example.wattercount.Fragments.DetailFragment"
+            android:label="fragment_detail"
+            tools:layout="@layout/fragment_detail" />
+        <fragment
+            android:id="@+id/statisticFragment3"
+            android:name="com.example.wattercount.Fragments.StatisticFragment"
+            android:label="fragment_statistic"
+            tools:layout="@layout/fragment_statistic">
+            <action
+                android:id="@+id/action_statisticFragment3_to_detailFragment"
+                app:destination="@id/detailFragment" />
+        </fragment>
+    </navigation>
+</navigation>
