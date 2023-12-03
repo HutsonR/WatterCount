@@ -5,6 +5,6 @@
         android:id="@+id/homeFragment3"
         android:icon="@drawable/ic_home"/>
     <item android:title="Статистика"
-        android:id="@+id/detailNested"
+        android:id="@+id/statisticFragment3"
         android:icon="@drawable/ic_stats"/>
 </menu>

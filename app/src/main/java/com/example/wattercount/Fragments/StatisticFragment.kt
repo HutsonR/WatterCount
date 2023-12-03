@@ -55,10 +55,6 @@ class StatisticFragment : Fragment() {
                 binding.averageFinishResult.text = "${Utils.calculateAverageFinish(dataStatsList)}"
             }
             setStatsRecycler()
-
-            binding.averageFinishResult.setOnClickListener {
-                findNavController().navigate(R.id.action_statisticFragment3_to_detailFragment)
-            }
         }
     }
 
